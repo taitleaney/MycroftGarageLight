@@ -10,7 +10,8 @@
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import LOG
-import os
+#import os
+from lifxlan import LifxLAN
 
 # Each skill is contained within its own class, which inherits base methods
 # from the MycroftSkill class.  You extend this class as shown below.
@@ -41,7 +42,25 @@ class GarageLightSkill(MycroftSkill):
         # In this case, respond by simply speaking a canned response.
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
-        os.system('python light.py')
+        #os.system('python light.py')
+        lifx = LifxLAN()
+	
+    # get devices
+        devices = lifx.get_lights()
+	
+        bulb1 = devices[0]
+        bulb2 = devices[1]
+    
+        # get original state
+        original_power = bulb1.get_power()
+            
+        if original_power == 0:
+            bulb1.set_power("on")
+            bulb2.set_power("on")
+        else:
+            bulb1.set_power("off")
+            bulb2.set_power("off")
+        
         self.speak_dialog("garage.light")
 
     
