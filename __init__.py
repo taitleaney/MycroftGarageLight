@@ -36,12 +36,13 @@ class GarageLightSkill(MycroftSkill):
     #   'Hello world'
     #   'Howdy you great big world'
     #   'Greetings planet earth'
-    @intent_handler(IntentBuilder("GarageLight").require("garage").require("light"))
+    @intent_handler(IntentBuilder("").require("garage").require("light"))
     def handle_garage_light_intent(self, message):
         # In this case, respond by simply speaking a canned response.
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
         os.system('python light.py')
+        self.speak_dialog("garage.light")
 
     
 
