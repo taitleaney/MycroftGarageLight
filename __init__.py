@@ -43,23 +43,7 @@ class GarageLightSkill(MycroftSkill):
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
         #os.system('python light.py')
-        lifx = LifxLAN()
-	
-    # get devices
-        devices = lifx.get_lights()
-	
-        bulb1 = devices[0]
-        bulb2 = devices[1]
-    
-        # get original state
-        original_power = bulb1.get_power()
-            
-        if original_power == 0:
-            bulb1.set_power("on")
-            bulb2.set_power("on")
-        else:
-            bulb1.set_power("off")
-            bulb2.set_power("off")
+        light()
         
         self.speak_dialog("garage.light")
 
@@ -78,3 +62,23 @@ class GarageLightSkill(MycroftSkill):
 # Note that it's outside the class itself.
 def create_skill():
     return GarageLightSkill()
+
+def light():
+    
+    lifx = LifxLAN()
+	
+    # get devices
+    devices = lifx.get_lights()
+	
+    bulb1 = devices[0]
+    bulb2 = devices[1]
+    
+        # get original state
+    original_power = bulb1.get_power()
+            
+    if original_power == 0:
+        bulb1.set_power("on")
+        bulb2.set_power("on")
+    else:
+        bulb1.set_power("off")
+        bulb2.set_power("off")
